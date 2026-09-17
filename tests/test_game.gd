@@ -30,6 +30,15 @@ func release(key: Key = KEY_ENTER) -> void:
 	await process_frame
 	await process_frame
 
+func tap(position: Vector2 = Vector2(480, 270)) -> void:
+	var event := InputEventScreenTouch.new()
+	event.index = 0
+	event.position = position
+	event.pressed = true
+	main._input(event)
+	await process_frame
+	await process_frame
+
 func run() -> void:
 	main = load("res://scenes/Main.tscn").instantiate()
 	root.add_child(main)
@@ -41,20 +50,22 @@ func run() -> void:
 	check(game.state == GameManager.GameState.TITLE, "Initial title")
 	check(InputMap.action_has_event("steal", key_event(KEY_ENTER)), "Enter InputMap")
 	check(InputMap.action_has_event("steal", key_event(KEY_KP_ENTER)), "Numpad Enter InputMap")
-	await press()
-	check(game.state == GameManager.GameState.PLAYING, "Enter starts play")
-	check(not game.is_caught and game.score == 0, "Start press does not steal")
-	await press(KEY_ENTER, true)
-	check(not game.is_caught, "Key echo ignored")
-	await release()
+	await tap()
+	check(game.state == GameManager.GameState.PLAYING, "Tap starts play")
+	check(not game.is_caught and game.score == 0, "Start tap does not steal")
+	await create_timer(0.15).timeout
 	game.target.has_banana = false
 	game.target.begin_distraction(TargetCoworker.CoworkerState.PHONE)
 	await process_frame
 	check(game.bubble.visible and game.target.can_be_stolen, "Phone opens matching bubble and safe window")
-	await press(KEY_KP_ENTER)
-	check(game.score == 100 and game.stolen_tasks == 1, "Numpad Enter steals task +100")
+	await tap(Vector2(18, 520))
+	check(game.score == 100 and game.stolen_tasks == 1, "Tap steals task +100")
 	check(not game.target.can_be_stolen and not game.bubble.visible, "Success closes window immediately")
-	await release(KEY_KP_ENTER)
+	await press(KEY_ENTER, true)
+	check(game.score == 100 and not game.is_caught, "Key echo is ignored after a tap")
+	# A mirrored mobile touch must not apply a second action.
+	await tap(Vector2(18, 520))
+	check(game.score == 100 and not game.is_caught, "Touch debounce prevents duplicate action")
 	await press()
 	check(game.score == 100 and not game.is_caught, "Short input lock prevents duplicate score")
 	await release()
