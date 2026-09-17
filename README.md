@@ -4,6 +4,8 @@
 Godot 4.5.1 / GDScript / 2D。見つかるまで続くワンボタン・スコアアタックです。
 同僚が電話や右隣との会話に気を取られたら、仕事とバナナを横取りします。
 
+公開版：<https://badgio0906.github.io/yokodori-days/>
+
 ![ゲーム画面](docs/gameplay.png)
 
 ## すぐ遊ぶ
