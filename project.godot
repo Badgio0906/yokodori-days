@@ -1,0 +1,30 @@
+; Godot 4.5.1 / Compatibility renderer / single-threaded Web export.
+config_version=5
+
+[application]
+config/name="澤野さんの横取りデイズ"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+config/description="Enterだけで遊ぶ、オフィス横取りスコアアタック。"
+
+[display]
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/size/window_width_override=960
+window/size/window_height_override=540
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/default_filters/use_nearest_mipmap_filter=false
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+environment/defaults/default_clear_color=Color(0.06, 0.1, 0.15, 1)
+
+[input]
+steal={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"physical_keycode":4194309), Object(InputEventKey,"physical_keycode":4194310)]
+}

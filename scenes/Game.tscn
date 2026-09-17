@@ -1,0 +1,79 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/office/background.png" id="bg"]
+[ext_resource type="Texture2D" path="res://assets/office/desks.png" id="desks"]
+[ext_resource type="Texture2D" path="res://assets/items/phone.png" id="phone"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Sawano.tscn" id="Sawano"]
+[ext_resource type="PackedScene" path="res://scenes/characters/TargetCoworker.tscn" id="TargetCoworker"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Coworker.tscn" id="Coworker"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="HUD"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ChanceBubble.tscn" id="ChanceBubble"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ScorePopup.tscn" id="ScorePopup"]
+[ext_resource type="AudioStream" path="res://assets/audio/phone_ring.wav" id="phone_ring"]
+[ext_resource type="AudioStream" path="res://assets/audio/steal_success.wav" id="steal_success"]
+[ext_resource type="AudioStream" path="res://assets/audio/banana_get.wav" id="banana_get"]
+[ext_resource type="AudioStream" path="res://assets/audio/caught.wav" id="caught"]
+[ext_resource type="AudioStream" path="res://assets/audio/game_over.wav" id="game_over"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("script")
+process_priority = 10
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("bg")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="Sawano" parent="." instance=ExtResource("Sawano")]
+z_index = -8
+position = Vector2(244, 288)
+
+[node name="TargetCoworker" parent="." instance=ExtResource("TargetCoworker")]
+z_index = -8
+position = Vector2(476, 288)
+
+[node name="Coworker" parent="." instance=ExtResource("Coworker")]
+z_index = -8
+position = Vector2(708, 288)
+
+[node name="Desks" type="Sprite2D" parent="."]
+z_index = -6
+texture = ExtResource("desks")
+centered = false
+scale = Vector2(2, 2)
+
+[node name="Phone" type="Sprite2D" parent="."]
+z_index = -5
+texture = ExtResource("phone")
+position = Vector2(569, 327)
+scale = Vector2(2, 2)
+
+[node name="HUD" parent="." instance=ExtResource("HUD")]
+
+[node name="ChanceBubble" parent="." instance=ExtResource("ChanceBubble")]
+
+[node name="ScorePopup" parent="." instance=ExtResource("ScorePopup")]
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="phone_ring" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("phone_ring")
+volume_db = -8.0
+
+[node name="steal_success" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("steal_success")
+volume_db = -8.0
+
+[node name="banana_get" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("banana_get")
+volume_db = -8.0
+
+[node name="caught" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("caught")
+volume_db = -8.0
+
+[node name="game_over" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("game_over")
+volume_db = -8.0
